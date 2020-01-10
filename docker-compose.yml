@@ -1,18 +1,12 @@
 version: '3'
 
 services:
-  nginx:
-    image: nginx:1.16
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./config/nginx:/etc/nginx/conf.d
-    depends_on:
-      - web
   db:
-    image: postgres
+    image: postgres:9.6-alpine
     ports:
       - "5432:5432"
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
   web:
     build: .
     command: gunicorn djangonginx.wsgi -b 0.0.0.0:8000
@@ -22,9 +16,18 @@ services:
       - "8000"
     depends_on:
       - db
+  nginx:
+    image: nginx:1.16
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./static:/static
+    depends_on:
+      - web
 
 networks:
- default:
-   ipam:
-     config:
-       - subnet: 172.185.0.0/16
+  default:
+    ipam:
+      config:
+        - subnet: 172.185.0.0/16

@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
   nginx:
-    image: nginx:1.16
+    image: nginx:1.16.1-alpine
     ports:
       - "8000:8000"
     volumes:

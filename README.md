@@ -8,4 +8,13 @@ En este projecto se expone una configuración básica para la integración de ng
 
 ## Como iniciar
 1. Clonar repostorio
-1. Iniciar contenedores `$ docker-compose up --build`
+1. Iniciar contenedores `$ docker-compose up`
+
+## Probar
+```bash
+curl -H "Host: sitio.local" localhost
+```
+
+```bash
+curl -H "Host: test.sitio.local" localhost
+```

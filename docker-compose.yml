@@ -1,16 +1,10 @@
 version: '3'
 
-services:  
-  db:
-    image: postgres:9.6-alpine
-    ports:
-      - "6543:5432"
-    environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
+services:
 
   nginx-proxy:
     image: jwilder/nginx-proxy:alpine
-    restart: always
+
     ports:
       - "80:80"
     volumes:
@@ -18,33 +12,39 @@ services:
   
   www:
     image: nginx:1.16.1-alpine
-    restart: always
     expose:
       - "80"
+      - "8001"
     volumes:
-      - ./config/nginx:/etc/nginx/conf.d
+      - ./config:/etc/nginx/conf.d
     environment:
       - VIRTUAL_HOST=sitio.local
 
   web:
     build: .
-    command: gunicorn djangonginx.wsgi -b 0.0.0.0:8000
+    command: gunicorn djangonginx.wsgi -b 0.0.0.0:8001
+    expose:
+      - "8001"
     volumes:
       - .:/code
-    expose:
-      - "8000"
-    depends_on:
-      - db
-
+  
   www-test:
     image: nginx:1.16.1-alpine
-    restart: always
     expose:
       - "80"
+      - "8002"
     volumes:
-      - /home/leonel/test/djangonginx/static:/usr/share/nginx/html:ro
+      - ./config:/etc/nginx/conf.d
     environment:
       - VIRTUAL_HOST=test.sitio.local
+
+  web-test:
+    build: .
+    command: gunicorn djangonginx.wsgi -b 0.0.0.0:8002
+    expose:
+      - "8002"
+    volumes:
+      - .:/code
 
 networks:
   default:

@@ -18,7 +18,7 @@ services:
     volumes:
       - ./config:/etc/nginx/conf.d
     environment:
-      - VIRTUAL_HOST=hlgrunt.tk,www.hlgrunt.tk
+      - VIRTUAL_HOST=sitio.local
 
   web:
     build: .
@@ -36,7 +36,7 @@ services:
     volumes:
       - ./config:/etc/nginx/conf.d
     environment:
-      - VIRTUAL_HOST=test.hlgrunt.tk,www.test.hlgrunt.tk
+      - VIRTUAL_HOST=test.sitio.local
 
   web-test:
     build: .

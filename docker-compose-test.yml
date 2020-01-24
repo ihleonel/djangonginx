@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  www-test:
+    image: nginx:1.16.1-alpine
+    expose:
+      - "80"
+      - "8002"
+    volumes:
+      - ./config/test:/etc/nginx/conf.d
+    environment:
+      - VIRTUAL_HOST=test.sitio.local
+
+  web-test:
+    build: .
+    command: gunicorn djangonginx.wsgi -b 0.0.0.0:8002
+    expose:
+      - "8002"
+    volumes:
+      - .:/code
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.185.0.0/16

@@ -10,6 +10,8 @@ services:
       - ./config/test:/etc/nginx/conf.d
     environment:
       - VIRTUAL_HOST=test.sitio.local
+      - LETSENCRYPT_HOST=sitio.local
+      - LETSENCRYPT_EMAIL=ibarra.h.leonel@gmail.com
 
   web-test:
     build: .

@@ -9,8 +9,8 @@ services:
     volumes:
       - ./config/prod:/etc/nginx/conf.d
     environment:
-      - VIRTUAL_HOST=hlgrunt.tk
-      - LETSENCRYPT_HOST=hlgrunt.tk,www.hlgrunt.tk
+      - VIRTUAL_HOST=sitio.local
+      - LETSENCRYPT_HOST=sitio.local
       - LETSENCRYPT_EMAIL=ibarra.h.leonel@gmail.com
 
   web:
